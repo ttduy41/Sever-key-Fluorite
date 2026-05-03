@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Fluorite API Server</title>
+</head>
+<body style="background-color: #0d1117; color: #58a6ff; font-family: monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+
+    <div id="response">WAITING_REQUEST</div>
+
+    <script>
+        // Cấu trúc dữ liệu Key trực tiếp trong Code (Dễ quản lý cho web tĩnh)
+        // Lưu ý: Thay thế các mảng này bằng danh sách key từ file Excel mình đã gửi
+        const database = {
+            "day_1": [
+                "Fluorite-ADR-EXAMPLE1D",
+                // Dán 3000 key 1 ngày vào đây
+            ],
+            "day_7": [
+                "Fluorite-ADR-EXAMPLE7D",
+                // Dán 4000 key 7 ngày vào đây
+            ],
+            "day_30": [
+                "Fluorite-ADR-EXAMPLE30D"
+                // Dán 3000 key 30 ngày vào đây
+            ]
+        };
+
+        // Lấy tham số 'key' từ URL (Ví dụ: index.html?key=Fluorite-ADR-...)
+        const params = new URLSearchParams(window.location.search);
+        const userKey = params.get('key');
+        const display = document.getElementById('response');
+
+        function checkKey() {
+            if (!userKey) {
+                display.innerText = "ERROR_NO_KEY";
+                return;
+            }
+
+            // Logic kiểm tra key trong database
+            if (database.day_1.includes(userKey)) {
+                display.innerText = "SUCCESS_1D";
+            } 
+            else if (database.day_7.includes(userKey)) {
+                display.innerText = "SUCCESS_7D";
+            } 
+            else if (database.day_30.includes(userKey)) {
+                display.innerText = "SUCCESS_30D";
+            } 
+            else {
+                display.innerText = "INVALID_KEY";
+            }
+        }
+
+        // Chạy kiểm tra ngay khi load trang
+        checkKey();
+    </script>
+</body>
+</html>
